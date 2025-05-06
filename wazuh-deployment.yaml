@@ -1,0 +1,140 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: wazuh-manager
+  namespace: wazuh
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wazuh-manager
+  serviceName: "wazuh-manager"
+  template:
+    metadata:
+      labels:
+        app: wazuh-manager
+    spec:
+      containers:
+      - name: wazuh-manager
+        image: wazuh/wazuh-manager:latest
+        ports:
+        - containerPort: 1514
+        - containerPort: 1515
+        volumeMounts:
+        - name: wazuh-manager-data
+          mountPath: /var/ossec/data
+      volumes:
+      - name: wazuh-manager-data
+        persistentVolumeClaim:
+          claimName: wazuh-manager-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wazuh-manager-pvc
+  namespace: wazuh
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: wazuh-indexer
+  namespace: wazuh
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wazuh-indexer
+  serviceName: "wazuh-indexer"
+  template:
+    metadata:
+      labels:
+        app: wazuh-indexer
+    spec:
+      containers:
+      - name: wazuh-indexer
+        image: wazuh/wazuh-indexer:latest
+        ports:
+        - containerPort: 9200
+        volumeMounts:
+        - name: wazuh-indexer-data
+          mountPath: /usr/share/wazuh-indexer/data
+      volumes:
+      - name: wazuh-indexer-data
+        persistentVolumeClaim:
+          claimName: wazuh-indexer-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wazuh-indexer-pvc
+  namespace: wazuh
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wazuh-dashboard
+  namespace: wazuh
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wazuh-dashboard
+  template:
+    metadata:
+      labels:
+        app: wazuh-dashboard
+    spec:
+      containers:
+      - name: wazuh-dashboard
+        image: wazuh/wazuh-dashboard:latest
+        ports:
+        - containerPort: 443
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: azure-blob-storage
+provisioner: kubernetes.io/azure-disk
+parameters:
+  storageaccounttype: Standard_LRS
+  kind: BlobStorage
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: wazuh-pv
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: azure-blob-storage
+  azureFile:
+    secretName: azure-storage-secret
+    shareName: wazuh-share
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wazuh-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: azure-blob-storage
