@@ -17,18 +17,18 @@ jobs:
     - name: Authenticate with DockerHub
       uses: docker/login-action@v2
       with:
-        username: ${{ secrets.USERNAME_DOCKERHUB }}
-        password: ${{ secrets.PAT_DOCKERHUB }}
+        username: ${{ secrets.USERNAME_DOCKERHUB_WAZUH }}
+        password: ${{ secrets.PAT_DOCKERHUB_WAZUH }}
 
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v4
       with:
-        context: ./src
-        file: ./src/Dockerfile
+        context: .
+        file: .Dockerfile
         push: true
         tags: |
-          ${{ secrets.USERNAME_DOCKERHUB }}/wazuh:latest
-          ${{ secrets.USERNAME_DOCKERHUB }}/wazuh:${{ github.sha }}
+          ${{ secrets.USERNAME_DOCKERHUB_WAZUH }}/wazuh:latest
+          ${{ secrets.USERNAME_DOCKERHUB_WAZUH }}/wazuh:${{ github.sha }}
 
   CD:
     name: Continuous Deployment
@@ -49,4 +49,4 @@ jobs:
       with:
           images: samukasouza2207/wazuh:${{github.run_number}}
           manifests: |
-            k8s/deployment.yaml
+            .deployment.yaml
