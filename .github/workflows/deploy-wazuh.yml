@@ -33,7 +33,7 @@ jobs:
   CD:
     name: Continuous Deployment
     runs-on: ubuntu-latest
-
+    needs: [CI]
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
