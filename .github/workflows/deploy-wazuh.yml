@@ -23,8 +23,8 @@ jobs:
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v4
       with:
-        context: .
-        file: .Dockerfile
+        context: ./src
+        file: ./src/Dockerfile
         push: true
         tags: |
           ${{ secrets.USERNAME_DOCKERHUB_WAZUH }}/wazuh:latest
@@ -49,4 +49,5 @@ jobs:
       with:
           images: samukasouza2207/wazuh:${{github.run_number}}
           manifests: |
-            .deployment.yaml
+            ./k8s/wazuh-deployment.yaml
+            
