@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: wazuh-manager
-        image: wazuh/wazuh-manager:latest
+        image: azuh/wazuh-manager:4.11.2
         ports:
         - containerPort: 1514
         - containerPort: 1515
@@ -58,7 +58,7 @@ spec:
     spec:
       containers:
       - name: wazuh-indexer
-        image: wazuh/wazuh-indexer:latest
+        image: wazuh/wazuh-indexer:4.11.2
         ports:
         - containerPort: 9200
         volumeMounts:
@@ -98,7 +98,7 @@ spec:
     spec:
       containers:
       - name: wazuh-dashboard
-        image: wazuh/wazuh-dashboard:latest
+        image: wazuh/wazuh-dashboard:4.11.2
         ports:
         - containerPort: 443
 ---
