@@ -20,6 +20,9 @@ jobs:
         username: ${{ secrets.USERNAME_DOCKERHUB_WAZUH }}
         password: ${{ secrets.PAT_DOCKERHUB_WAZUH }}
 
+    - name: Generate SSL Certificates
+      run: bash certs/generate_certs.sh
+
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v4
       with:
