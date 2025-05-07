@@ -88,6 +88,11 @@ spec:
       - name: indexer-certs
         secret:
           secretName: indexer-certs-secret
+          items:
+          - key: indexer-key.pem
+            path: indexer-key.pem
+          - key: indexer-cert.pem
+            path: indexer-cert.pem
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -133,6 +138,11 @@ spec:
       - name: dashboard-certs
         secret:
           secretName: dashboard-certs-secret
+          items:
+          - key: dashboard-key.pem
+            path: dashboard-key.pem
+          - key: dashboard-cert.pem
+            path: dashboard-cert.pem
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
