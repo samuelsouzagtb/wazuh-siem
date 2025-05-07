@@ -120,7 +120,7 @@ spec:
       volumes:
       - name: dashboard-certs
         hostPath:
-          path: /home/samuelsouza/wazuh-siem/certs
+          path: /home/runner/work/wazuh-siem/wazuh-siem/k8s/certs
           type: Directory
 ---
 apiVersion: storage.k8s.io/v1
