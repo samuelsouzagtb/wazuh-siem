@@ -23,6 +23,9 @@ jobs:
     - name: Generate SSL Certificates
       run: bash k8s/generate_certs.sh
 
+    - name: Fix Permissions for Certificates
+      run: chmod -R 644 k8s/certs/*
+
     - name: k8s Set Context
       uses: Azure/k8s-set-context@v3.0
       with:
