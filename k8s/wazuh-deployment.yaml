@@ -39,6 +39,7 @@ spec:
   resources:
     requests:
       storage: 2Gi
+  storageClassName: azure-blob-storage-wazuh
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -87,6 +88,7 @@ spec:
   resources:
     requests:
       storage: 2Gi
+  storageClassName: azure-blob-storage-wazuh
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -115,7 +117,7 @@ spec:
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: azure-blob-storage
+  name: azure-blob-storage-wazuh
 provisioner: disk.csi.azure.com
 parameters:
   skuName: Standard_LRS
@@ -130,7 +132,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: azure-blob-storage
+  storageClassName: azure-blob-storage-wazuh
   azureFile:
     secretName: azure-storage-secret
     shareName: wazuh-share
@@ -146,4 +148,4 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  storageClassName: azure-blob-storage
+  storageClassName: azure-blob-storage-wazuh
