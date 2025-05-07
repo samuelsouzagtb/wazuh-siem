@@ -23,10 +23,17 @@ spec:
         volumeMounts:
         - name: wazuh-manager-data
           mountPath: /var/ossec/data
+        - name: manager-certs
+          mountPath: /etc/wazuh-manager/certs
+          readOnly: true
       volumes:
       - name: wazuh-manager-data
         persistentVolumeClaim:
           claimName: wazuh-manager-pvc
+      - name: manager-certs
+        hostPath:
+          path: /home/runner/work/wazuh-siem/wazuh-siem/k8s/certs/manager
+          type: Directory
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -72,10 +79,17 @@ spec:
         volumeMounts:
         - name: wazuh-indexer-data
           mountPath: /usr/share/wazuh-indexer/data
+        - name: indexer-certs
+          mountPath: /etc/wazuh-indexer/certs
+          readOnly: true
       volumes:
       - name: wazuh-indexer-data
         persistentVolumeClaim:
           claimName: wazuh-indexer-pvc
+      - name: indexer-certs
+        hostPath:
+          path: /home/runner/work/wazuh-siem/wazuh-siem/k8s/certs/indexer
+          type: Directory
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
