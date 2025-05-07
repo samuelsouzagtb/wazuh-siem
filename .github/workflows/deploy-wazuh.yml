@@ -23,6 +23,12 @@ jobs:
     - name: Generate SSL Certificates
       run: bash k8s/generate_certs.sh
 
+    - name: k8s Set Context
+      uses: Azure/k8s-set-context@v3.0
+      with:
+        method: kubeconfig
+        Kubeconfig: ${{secrets.K8S_CONFIG}}
+
     - name: Create Kubernetes Secrets for Certificates
       run: |
         kubectl create secret generic manager-certs-secret --from-file=k8s/certs/manager -n wazuh
