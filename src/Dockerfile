@@ -7,6 +7,10 @@ ENV WAZUH_CONFIG=/var/ossec/etc/ossec.conf
 # Copy custom configuration files (if any)
 # COPY ./config/ossec.conf /var/ossec/etc/ossec.conf
 
+# Copy SSL certificates
+COPY certs/dashboard-key.pem /etc/wazuh-dashboard/certs/dashboard-key.pem
+COPY certs/dashboard-cert.pem /etc/wazuh-dashboard/certs/dashboard-cert.pem
+
 # Expose necessary ports
 EXPOSE 1514 1515
 

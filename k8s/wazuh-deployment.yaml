@@ -113,6 +113,15 @@ spec:
         env:
         - name: WAZUH_DASHBOARD_SSL_ENABLED
           value: "false"
+        volumeMounts:
+        - name: dashboard-certs
+          mountPath: /etc/wazuh-dashboard/certs
+          readOnly: true
+      volumes:
+      - name: dashboard-certs
+        hostPath:
+          path: /home/samuelsouza/wazuh-siem/certs
+          type: Directory
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
