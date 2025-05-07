@@ -56,6 +56,13 @@ spec:
       labels:
         app: wazuh-indexer
     spec:
+      initContainers:
+      - name: fix-permissions
+        image: busybox
+        command: ["sh", "-c", "chmod -R 777 /usr/share/wazuh-indexer/data"]
+        volumeMounts:
+        - name: wazuh-indexer-data
+          mountPath: /usr/share/wazuh-indexer/data
       containers:
       - name: wazuh-indexer
         image: wazuh/wazuh-indexer:4.11.2
