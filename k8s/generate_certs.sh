@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# Create directories for certificates
-mkdir -p k8s/certs/indexer
-mkdir -p k8s/certs/manager
-mkdir -p k8s/certs/dashboard
-
-
 # Generate private key and certificate for Wazuh Indexer
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
   -keyout k8s/certs/indexer/indexer-key.pem \
