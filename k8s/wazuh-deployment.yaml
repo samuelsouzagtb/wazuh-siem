@@ -80,7 +80,7 @@ spec:
           mountPath: /usr/share/wazuh-indexer/data
         - name: indexer-certs
           mountPath: /etc/wazuh-indexer/certs
-          readOnly: true
+          readOnly: false
       volumes:
       - name: wazuh-indexer-data
         persistentVolumeClaim:
