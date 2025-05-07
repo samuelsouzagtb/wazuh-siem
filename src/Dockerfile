@@ -1,5 +1,5 @@
 # Use a base image for Wazuh Manager
-FROM wazuh/wazuh-manager:4.2.5
+FROM wazuh/wazuh-manager:4.12.0
 
 # Set environment variables if needed
 ENV WAZUH_CONFIG=/var/ossec/etc/ossec.conf
