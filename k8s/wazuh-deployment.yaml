@@ -70,6 +70,12 @@ spec:
         volumeMounts:
         - name: wazuh-indexer-data
           mountPath: /usr/share/wazuh-indexer/data
+      - name: fix-indexer-cert-permissions
+        image: busybox
+        command: ["sh", "-c", "chmod -R 644 /etc/wazuh-indexer/certs"]
+        volumeMounts:
+        - name: indexer-certs
+          mountPath: /etc/wazuh-indexer/certs
       containers:
       - name: wazuh-indexer
         image: wazuh/wazuh-indexer:4.11.2
