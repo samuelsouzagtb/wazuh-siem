@@ -30,4 +30,4 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 cat k8s/certs/dashboard/dashboard-cert.pem k8s/certs/dashboard/dashboard-key.pem > k8s/certs/dashboard/dashboard.pem
 
 # Ensure all generated certificates have read permissions for all users and groups
-sudo chmod -R 644 k8s/certs/*
+chmod -R 644 k8s/certs/*
