@@ -31,9 +31,8 @@ spec:
         persistentVolumeClaim:
           claimName: wazuh-manager-pvc
       - name: manager-certs
-        hostPath:
-          path: /home/runner/work/wazuh-siem/wazuh-siem/k8s/certs/manager
-          type: Directory
+        secret:
+          secretName: manager-certs-secret
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -87,9 +86,8 @@ spec:
         persistentVolumeClaim:
           claimName: wazuh-indexer-pvc
       - name: indexer-certs
-        hostPath:
-          path: /home/runner/work/wazuh-siem/wazuh-siem/k8s/certs/indexer
-          type: Directory
+        secret:
+          secretName: indexer-certs-secret
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -133,9 +131,8 @@ spec:
           readOnly: true
       volumes:
       - name: dashboard-certs
-        hostPath:
-          path: /home/runner/work/wazuh-siem/wazuh-siem/k8s/certs
-          type: Directory
+        secret:
+          secretName: dashboard-certs-secret
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass

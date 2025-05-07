@@ -23,6 +23,12 @@ jobs:
     - name: Generate SSL Certificates
       run: bash k8s/generate_certs.sh
 
+    - name: Create Kubernetes Secrets for Certificates
+      run: |
+        kubectl create secret generic manager-certs-secret --from-file=k8s/certs/manager -n wazuh
+        kubectl create secret generic indexer-certs-secret --from-file=k8s/certs/indexer -n wazuh
+        kubectl create secret generic dashboard-certs-secret --from-file=k8s/certs/dashboard -n wazuh
+
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v4
       with:
