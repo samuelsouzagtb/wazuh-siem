@@ -101,6 +101,9 @@ spec:
         image: wazuh/wazuh-dashboard:4.12.0
         ports:
         - containerPort: 443
+        env:
+        - name: WAZUH_DASHBOARD_SSL_ENABLED
+          value: "false"
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
