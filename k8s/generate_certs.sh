@@ -5,6 +5,9 @@ mkdir -p k8s/certs/indexer
 mkdir -p k8s/certs/manager
 mkdir -p k8s/certs/dashboard
 
+# Ensure the k8s/certs directory has the correct permissions
+chmod -R 755 k8s/certs
+
 # Generate private key and certificate for Wazuh Indexer
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
   -keyout k8s/certs/indexer/indexer-key.pem \
