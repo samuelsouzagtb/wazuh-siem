@@ -63,19 +63,6 @@ spec:
       labels:
         app: wazuh-indexer
     spec:
-      initContainers:
-      - name: fix-permissions
-        image: busybox
-        command: ["sh", "-c", "chmod -R 777 /usr/share/wazuh-indexer/data"]
-        volumeMounts:
-        - name: wazuh-indexer-data
-          mountPath: /usr/share/wazuh-indexer/data
-      - name: fix-indexer-cert-permissions
-        image: busybox
-        command: ["sh", "-c", "chmod -R 644 /etc/wazuh-indexer/certs"]
-        volumeMounts:
-        - name: indexer-certs
-          mountPath: /etc/wazuh-indexer/certs
       containers:
       - name: wazuh-indexer
         image: wazuh/wazuh-indexer:4.11.2
@@ -85,8 +72,8 @@ spec:
         - name: wazuh-indexer-data
           mountPath: /usr/share/wazuh-indexer/data
         - name: indexer-certs
-          mountPath: /etc/wazuh-indexer/certs
-          readOnly: false
+          mountPath: /usr/share/wazuh-indexer/certs
+          readOnly: true
       volumes:
       - name: wazuh-indexer-data
         persistentVolumeClaim:
@@ -96,9 +83,9 @@ spec:
           secretName: indexer-certs-secret
           items:
           - key: indexer-key.pem
-            path: indexer-key.pem
+            path: certs/indexer-key.pem
           - key: indexer-cert.pem
-            path: indexer-cert.pem
+            path: certs/indexer-cert.pem
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
