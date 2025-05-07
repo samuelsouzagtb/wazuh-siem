@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: wazuh-manager
-        image: wazuh/wazuh-manager:4.11.2
+        image: wazuh/wazuh-manager:4.2.5
         ports:
         - containerPort: 1514
         - containerPort: 1515
@@ -56,16 +56,9 @@ spec:
       labels:
         app: wazuh-indexer
     spec:
-      initContainers:
-      - name: fix-permissions
-        image: busybox
-        command: ["sh", "-c", "chmod -R 777 /usr/share/wazuh-indexer/data"]
-        volumeMounts:
-        - name: wazuh-indexer-data
-          mountPath: /usr/share/wazuh-indexer/data
       containers:
       - name: wazuh-indexer
-        image: wazuh/wazuh-indexer:4.11.2
+        image: wazuh/wazuh-indexer:4.2.5
         ports:
         - containerPort: 9200
         volumeMounts:
@@ -105,12 +98,9 @@ spec:
     spec:
       containers:
       - name: wazuh-dashboard
-        image: wazuh/wazuh-dashboard:4.11.2
+        image: wazuh/wazuh-dashboard:4.2.5
         ports:
         - containerPort: 443
-        env:
-        - name: WAZUH_DASHBOARD_SSL_ENABLED
-          value: "false"
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
