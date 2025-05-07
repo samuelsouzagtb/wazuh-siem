@@ -28,7 +28,7 @@ jobs:
         push: true
         tags: |
           ${{ secrets.USERNAME_DOCKERHUB_WAZUH }}/wazuh:latest
-          ${{ secrets.USERNAME_DOCKERHUB_WAZUH }}/wazuh:${{ github.sha }}
+          ${{ secrets.USERNAME_DOCKERHUB_WAZUH }}/wazuh:${{github.run_number}}
 
   CD:
     name: Continuous Deployment
