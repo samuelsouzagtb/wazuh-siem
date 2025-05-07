@@ -72,7 +72,7 @@ spec:
           mountPath: /usr/share/wazuh-indexer/data
       - name: fix-indexer-cert-permissions
         image: busybox
-        command: ["sh", "-c", "chmod -R 644 /etc/wazuh-indexer/certs"]
+        command: ["sh", "-c", "if [ -d /etc/wazuh-indexer/certs ]; then chmod -R 644 /etc/wazuh-indexer/certs; else echo 'Directory not found'; fi"]
         volumeMounts:
         - name: indexer-certs
           mountPath: /etc/wazuh-indexer/certs
